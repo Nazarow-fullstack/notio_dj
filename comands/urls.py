@@ -1,8 +1,8 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import CommandViewSet
-router = DefaultRouter()
-router.register(r'commands', CommandViewSet, basename='command')
+from django.urls import path
+from .views import CommandListCreateView, AddMemberView, UserListView
+
 urlpatterns = [
-    path('', include(router.urls)),
+    path('commands/', CommandListCreateView.as_view(), name='command-list-create'),
+    path('commands/add-member/', AddMemberView.as_view(), name='add-member'),
+    path('users/', UserListView.as_view(), name='user-list'),
 ]

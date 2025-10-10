@@ -1,10 +1,15 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 from .models import Task
 
+class TaskSerializer(serializers.ModelSerializer):
+    assigned_to = serializers.StringRelatedField()
+    command = serializers.StringRelatedField()
 
-
-class TaskSerializer(ModelSerializer):
     class Meta:
         model = Task
-        fields = ['id','tittle','user_responsible','comand','created_at','status']
-        read_only_fields = ['id', 'created_at']
+        fields = ['id', 'title', 'description', 'deadline', 'status', 'command', 'assigned_to', 'created_at']
+
+class CreateUpdateTaskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = ['title', 'description', 'deadline', 'status', 'command', 'assigned_to']
