@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'comands',
     'tasks',
     'comments',
+    'projects',
     'rest_framework',
     'rest_framework_simplejwt',
     'drf_yasg',

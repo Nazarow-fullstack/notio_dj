@@ -36,5 +36,6 @@ urlpatterns = [
     path('api/', include('comands.urls')),
     path('api/', include('tasks.urls')), 
     path('api/', include('comments.urls')), 
+    path('api/', include('projects.urls')), 
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 ]
