@@ -14,11 +14,8 @@ class Command(models.Model):
 class TeamMember(models.Model):
 
     command = models.ForeignKey(Command, on_delete=models.CASCADE, related_name="members")
-
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="team_memberships")
-
     date_joined = models.DateTimeField(auto_now_add=True)
-
     class Meta:
 
         unique_together = ('command', 'user')

@@ -13,7 +13,6 @@ class RegisterView(generics.CreateAPIView):
 
 class LogoutView(APIView):
     permission_classes = [permissions.IsAuthenticated]
-
     def post(self, request):
         try:
             refresh_token = request.data["refresh"]
