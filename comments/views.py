@@ -23,6 +23,10 @@ class CommentViewSet(viewsets.ModelViewSet):
         serializer.save()
 
     def perform_destroy(self, instance):
-        if instance.author != self.request.user:
-            raise PermissionDenied("You can only delete your own comments.")
+        is_author = instance.author == self.request.user
+        is_command_owner = instance.task.command.owner == self.request.user
+
+        if not is_author and not is_command_owner:
+            raise PermissionDenied("You must be the author or the command owner to delete this comment.")
+        
         instance.delete()

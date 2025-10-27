@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'comands',
     'tasks',
     'comments',
+    "corsheaders",
     'projects',
     'rest_framework',
     'rest_framework_simplejwt',
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = 'authentication.CustomUser'
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -94,6 +96,10 @@ TEMPLATES = [
             ],
         },
     },
+]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
 ]
 
 WSGI_APPLICATION = 'server.wsgi.application'
