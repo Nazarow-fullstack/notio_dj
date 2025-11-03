@@ -19,22 +19,22 @@ class TaskViewSet(viewsets.ModelViewSet):
             return Task.objects.none()
         
         return Task.objects.filter(
-            Q(command__owner=user) | Q(assigned_to=user)
-        ).distinct()
+            Q(project__owner=user) | Q(assigned_to=user)
+        ).select_related('project', 'command', 'assigned_to').distinct()
 
     def perform_create(self, serializer):
-        command = serializer.validated_data.get('command')
-        if command and command.owner != self.request.user:
-            raise PermissionDenied("You are not the owner of this command and cannot create tasks.")
+        project = serializer.validated_data.get('project')
+        if project and project.owner != self.request.user:
+            raise PermissionDenied("You can only create tasks in your own projects.")
         serializer.save()
 
     def perform_update(self, serializer):
         task = self.get_object()
-        if task.command.owner != self.request.user:
-            raise PermissionDenied("Only the command owner can update this task.")
+        if task.project.owner != self.request.user:
+            raise PermissionDenied("You can only edit tasks in your own projects.")
         serializer.save()
 
     def perform_destroy(self, instance):
-        if instance.command.owner != self.request.user:
-            raise PermissionDenied("Only the command owner can delete this task.")
+        if instance.project.owner != self.request.user:
+            raise PermissionDenied("You can only delete tasks in your own projects.")
         instance.delete()

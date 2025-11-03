@@ -1,7 +1,7 @@
 from django.db import models
 from authentication.models import CustomUser
 from comands.models import Command
-
+from projects.models import Project 
 
 class Task(models.Model):
     CHOISES_STATUS = [
@@ -15,6 +15,7 @@ class Task(models.Model):
     deadline = models.DateTimeField()
     status = models.CharField(max_length=20, choices=CHOISES_STATUS, default='new')
 
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="tasks")
     command = models.ForeignKey(Command, on_delete=models.CASCADE, related_name="tasks")
     
     assigned_to = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True, related_name="tasks")

@@ -3,13 +3,13 @@ from .models import Project
 
 class ProjectSerializer(serializers.ModelSerializer):
     owner = serializers.StringRelatedField()
-    command = serializers.StringRelatedField()
+    commands = serializers.StringRelatedField(many=True)
     
     class Meta:
         model = Project
-        fields = ['id', 'name', 'owner', 'command', 'created_at']
+        fields = ['id', 'name', 'owner', 'commands', 'created_at']
 
 class CreateUpdateProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ['name', 'command']
+        fields = ['name', 'commands']
